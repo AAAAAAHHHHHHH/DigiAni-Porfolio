@@ -1,0 +1,212 @@
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&family=Yusei+Magic&display=swap');
+
+:root {
+  --borderThickness: 5px;
+  --colour1: #fff; /* white */
+  --colour2: #dfdde5; /* grey */
+  --colour3: #0736fe; /* blue 1 */
+  --colour4: #5972de; /* blue 2 */
+}
+
+@keyframes appear {
+    from {
+      opacity: 0;
+      scale: 0.1;
+    }
+
+    to {
+      opacity: 1;
+      scale: 1;
+    }
+}
+
+.tiny5-regular {
+    font-family: "Tiny5", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.yusei-magic-regular {
+    font-family: "Yusei Magic", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    font-family: "Huninn", sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow: scroll; /* Prevent scrollbars due to canvas */
+}
+
+#noiseCanvas {
+    position: fixed; /* Fixed position to cover the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Viewport width */
+    height: 100vh; /* Viewport height */
+    z-index: -1; /* Place it behind all other content */
+    display: block;
+}
+
+/* Canvas styling for the static Film Grain overlay */
+#staticGrainCanvas {
+    position: fixed; /* Fixed position to cover the viewport */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Viewport width */
+    height: 100vh; /* Viewport height */
+    z-index: 2; /* Place it above the header, main, and footer */
+    pointer-events: none; /* Allow clicks to pass through this canvas */
+    opacity: 0.05; /* Overall transparency of the grain layer */
+    display: block;
+}
+
+/* Canvas will act as the overlay */
+#textureCanvas {
+    position: fixed; /* Fixed position ensures it stays in viewport during scroll */
+    top: 0;
+    left: 0;
+    width: 100vw; /* Cover full viewport width */
+    height: 100vh; /* Cover full viewport height */
+    pointer-events: none; /* Allows clicks/interactions to pass through to elements beneath */
+    z-index: 9999; /* Ensure it's on top of most content */
+    opacity: 0.3; /* Adjust for desired subtlety of the texture. Lower value = more subtle, Higher value = more intense. */
+}
+
+header {
+    background-color: var(--colour2);
+    padding: 1rem 0; /* Adjust padding as needed */
+    display: flex; /* Use flexbox for header content alignment */
+    flex-direction: column; /* Stack children vertically */
+    align-items: flex-start; /* Align items to the start (left) */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative; /* Ensure header is above the background canvas */
+    z-index: 1; /* Keep header above the background noise */
+}
+
+/* Adjust padding for the top bar container to align with the left-aligned title */
+#top-bar-container {
+    padding-left: 1rem; /* Add some left padding to align with title if needed */
+    padding-right: 1rem; /* Maintain right padding */
+}
+
+h1 {
+
+}
+
+h2 {
+
+}
+
+h3 {
+
+}
+
+h4 {
+
+}
+
+p {
+    color: var(--colour3)
+}
+
+.container {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.content{
+    /*background-color: var(--colour2);*/
+    margin: 10px 0px;
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+    overflow: clip;
+    position: relative;
+    min-height: 40vh;
+}
+
+.video-bg{
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+
+}
+
+.cover-title {
+    width: 50%;
+    position: relative;
+}
+
+.cover-text {
+    width: 25%;
+    position: relative;
+}
+
+.Porfolio-title {
+    text-align: left;
+    word-break: break-all;
+}
+
+section {
+    background-color: var(--colour2);
+    float: left;
+    width: calc(30% - 75px);
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+
+    margin-right: 5px;
+    min-height: 35vh;
+}
+
+aside {
+    background-color: var(--colour2);
+    float: right;
+    width: calc(70% - 75px);
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+    margin-left: 5px;
+    min-height: 35vh;
+}
+
+.project-l {
+    float: left;
+    background-color: var(--colour2);
+    min-width: 300px;
+    width: calc(50% - 85px);
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 10px 0px;
+    animation: appear 5s linear;
+}
+
+.project-r {
+    float: right;
+    background-color: var(--colour2);
+    min-width: 300px;
+    width: calc(50% - 85px);
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 10px 0px;
+    animation: appear linear;
+    animation-timeline: view();
+}
+
+.project-thumbnail {
+    margin: 0 auto;
+    border: var(--borderThickness) solid var(--colour1);
+    width: 100%;
+}
+
+.third-boxidknaming {
+    width: 50%;
+}
