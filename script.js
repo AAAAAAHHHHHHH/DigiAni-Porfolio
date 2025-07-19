@@ -1,13 +1,12 @@
+// I... I am sorry for what you will see
+
 document.addEventListener('DOMContentLoaded', () => {
-    // --- Paper Grain and Scratches Texture Canvas ---
     const textureCanvas = document.getElementById('textureCanvas');
     const textureCtx = textureCanvas.getContext('2d');
 
-    // --- Animated Perlin Noise Background Canvas ---
     const noiseCanvas = document.getElementById('noiseCanvas');
     const noiseCtx = noiseCanvas.getContext('2d');
 
-    // --- Top Bar and Empty Circle Logic ---
     const topBarContainer = document.getElementById('top-bar-container');
     const emptyCircleDiv = document.createElement('div');
     emptyCircleDiv.classList.add(
@@ -19,20 +18,16 @@ document.addEventListener('DOMContentLoaded', () => {
         console.error('Top bar container not found!');
     }
 
-    // --- Perlin Noise Constants ---
     let time = 0;
-    const scale = 0.01; // Controls the "zoom" level of the noise
-    const speed = 0.005; // Controls how fast the noise changes over time
-    const sharpness = 1; // Controls the "sharpness" of the blue/white transition
-    const numNoiseScratches = 2; // Number of scratches to draw per frame on noise canvas
+    const scale = 0.01;
+    const speed = 0.005;
+    const sharpness = 1;
+    const numNoiseScratches = 2;
 
-    // Constants for outline in Perlin noise
-    const outlineThreshold = 0.5; // Same as noise threshold for color change
-    const outlineFuzziness = 0.3; // Adjust this value to increase/decrease outline thickness with AA
+    const outlineThreshold = 0.5;
+    const outlineFuzziness = 0.3;
 
-    // Function to draw the paper grain and scratches, and now the vignette
     function drawTexture() {
-        // Clear the texture canvas before redrawing
         textureCtx.clearRect(0, 0, textureCanvas.width, textureCanvas.height);
 
         // --- Draw Grain ---
@@ -81,8 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const centerX = textureCanvas.width / 2;
         const centerY = textureCanvas.height / 2;
         const maxDim = Math.max(textureCanvas.width, textureCanvas.height);
-        const innerRadius = maxDim * 0.4; // Start transparent closer to center
-        const outerRadius = maxDim * 0.7; // End dark further out
+        const innerRadius = maxDim * 0.4;
+        const outerRadius = maxDim * 0.7;
 
         const gradient = textureCtx.createRadialGradient(
             centerX, centerY, innerRadius,
@@ -98,7 +93,6 @@ document.addEventListener('DOMContentLoaded', () => {
         textureCtx.fillRect(0, 0, textureCanvas.width, textureCanvas.height);
     }
 
-    // Basic procedural noise function (Perlin-like)
     function getNoiseValue(x, y, t) {
         let value = Math.sin(x * scale + t) * 0.5 +
                     Math.sin(y * scale * 0.8 + t * 0.7) * 0.5 +
@@ -107,14 +101,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return value;
     }
 
-    // Function to draw the noise and scratches on the noise canvas
     function drawNoise() {
         const width = noiseCanvas.width;
         const height = noiseCanvas.height;
         const imageData = noiseCtx.createImageData(width, height);
         const data = imageData.data;
 
-        // Step 1: Pre-calculate noise values for all pixels
         const noiseMap = new Array(width);
         for (let x = 0; x < width; x++) {
             noiseMap[x] = new Array(height);
@@ -123,7 +115,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // Step 2: Draw pixels based on noise map and add outline
+        // pixle
         for (let y = 0; y < height; y++) {
             for (let x = 0; x < width; x++) {
                 const noise = noiseMap[x][y];
@@ -132,7 +124,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 let r, g, b, a;
                 const currentColorIsBlue = noise > outlineThreshold;
 
-                // Check for outline: if current pixel's color state is different from any 8 neighbors
                 let isOutline = false;
                 for (let dx = -1; dx <= 1; dx++) {
                     for (let dy = -1; dy <= 1; dy++) {
@@ -145,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                             const neighborNoise = noiseMap[nx][ny];
                             const neighborColorIsBlue = neighborNoise > outlineThreshold;
 
-                            // Check if there's a transition within the fuzzy outline zone
                             if (
                                 (noise > (outlineThreshold - outlineFuzziness) && neighborNoise <= (outlineThreshold + outlineFuzziness)) ||
                                 (noise <= (outlineThreshold + outlineFuzziness) && neighborNoise > (outlineThreshold - outlineFuzziness))
@@ -179,7 +169,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         noiseCtx.putImageData(imageData, 0, 0);
 
-        // Draw scratches on top of the noise
         for (let i = 0; i < numNoiseScratches; i++) {
             noiseCtx.beginPath();
             const x1 = Math.random() * width;
@@ -196,27 +185,24 @@ document.addEventListener('DOMContentLoaded', () => {
             noiseCtx.stroke();
         }
     }
-
-    // Combined resize handler for both canvases
     function handleResize() {
         textureCanvas.width = window.innerWidth;
         textureCanvas.height = window.innerHeight;
         noiseCanvas.width = window.innerWidth;
         noiseCanvas.height = window.innerHeight;
 
-        drawTexture(); // Redraw paper texture (including vignette)
-        drawNoise();   // Redraw noise background
+        drawTexture();
+        drawNoise();
     }
 
-    // Animation loop for Perlin noise
     function animateNoise() {
         time += speed;
         drawNoise();
         requestAnimationFrame(animateNoise);
     }
 
-    // Initial setup and event listeners
-    handleResize(); // Draw textures initially
-    window.addEventListener('resize', handleResize); // Redraw on window resize
-    animateNoise(); // Start the Perlin noise animation
+
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    animateNoise();
 });

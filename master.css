@@ -1,23 +1,12 @@
+/*this is help hopes and dreams*/
 @import url('https://fonts.googleapis.com/css2?family=Tiny5&family=Yusei+Magic&display=swap');
 
 :root {
-  --borderThickness: 5px;
+  --borderThickness: 0px;
   --colour1: #fff; /* white */
   --colour2: #dfdde5; /* grey */
   --colour3: #0736fe; /* blue 1 */
   --colour4: #5972de; /* blue 2 */
-}
-
-@keyframes appear {
-    from {
-      opacity: 0;
-      scale: 0.1;
-    }
-
-    to {
-      opacity: 1;
-      scale: 1;
-    }
 }
 
 .tiny5-regular {
@@ -28,41 +17,40 @@
 
 .yusei-magic-regular {
     font-family: "Yusei Magic", sans-serif;
-    font-weight: 400;
+    font-weight: 350;
     font-style: normal;
 }
 
 body {
-    font-family: "Huninn", sans-serif;
+    font-family: "Yusei Magic", sans-serif;
     margin: 0;
     padding: 0;
-    overflow: scroll; /* Prevent scrollbars due to canvas */
+    overflow: scroll;
 }
 
 #noiseCanvas {
-    position: fixed; /* Fixed position to cover the viewport */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* Viewport width */
-    height: 100vh; /* Viewport height */
-    z-index: -1; /* Place it behind all other content */
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
     display: block;
 }
 
-/* Canvas styling for the static Film Grain overlay */
 #staticGrainCanvas {
-    position: fixed; /* Fixed position to cover the viewport */
+    position: fixed;
     top: 0;
     left: 0;
-    width: 100vw; /* Viewport width */
-    height: 100vh; /* Viewport height */
-    z-index: 2; /* Place it above the header, main, and footer */
-    pointer-events: none; /* Allow clicks to pass through this canvas */
-    opacity: 0.05; /* Overall transparency of the grain layer */
+    width: 100vw;
+    height: 100vh;
+    z-index: 2;
+    pointer-events: none;
+    opacity: 0.05;
     display: block;
 }
 
-/* Canvas will act as the overlay */
+/* DO NOT TOUCH, CRAP BREAKS */
 #textureCanvas {
     position: fixed; /* Fixed position ensures it stays in viewport during scroll */
     top: 0;
@@ -71,28 +59,27 @@ body {
     height: 100vh; /* Cover full viewport height */
     pointer-events: none; /* Allows clicks/interactions to pass through to elements beneath */
     z-index: 9999; /* Ensure it's on top of most content */
-    opacity: 0.3; /* Adjust for desired subtlety of the texture. Lower value = more subtle, Higher value = more intense. */
+    opacity: 0.0; /* Adjust for desired subtlety of the texture. Lower value = more subtle, Higher value = more intense. */
+}
+
+.image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    object-fit: cover;
+    pointer-events: none;
+    z-index: 9998;
+    opacity: 0.15;
 }
 
 header {
-    background-color: var(--colour2);
-    padding: 1rem 0; /* Adjust padding as needed */
-    display: flex; /* Use flexbox for header content alignment */
-    flex-direction: column; /* Stack children vertically */
-    align-items: flex-start; /* Align items to the start (left) */
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: relative; /* Ensure header is above the background canvas */
-    z-index: 1; /* Keep header above the background noise */
-}
-
-/* Adjust padding for the top bar container to align with the left-aligned title */
-#top-bar-container {
-    padding-left: 1rem; /* Add some left padding to align with title if needed */
-    padding-right: 1rem; /* Maintain right padding */
 }
 
 h1 {
-
+  font-family: "tiny5", sans-serif;
+  font-size: 85px;
 }
 
 h2 {
@@ -111,14 +98,27 @@ p {
     color: var(--colour3)
 }
 
+
 .container {
     width: 90%;
     margin: 0 auto;
 }
 
+.sticky-bar {
+    border-radius: 20px;
+    padding: 25px;
+    position: fixed;
+    background-color: var(--colour1);
+    width: 90%;
+    left: 5%;
+    top: 20px;
+    z-index: 1000;
+    box-sizing: border-box;
+}
+
 .content{
-    /*background-color: var(--colour2);*/
-    margin: 10px 0px;
+    margin-top: 30px;
+    margin-bottom:10px;
     border: var(--borderThickness) solid var(--colour1);
     border-radius: 20px;
     padding: 25px;
@@ -128,14 +128,14 @@ p {
 }
 
 .video-bg{
-    position: absolute;
-    z-index: -1;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    min-width: 100%;
-    min-height: 100%;
-
+    position: absolute; /* Positioned relative to its parent .content, section, or aside */
+    top: 0;
+    left: 0;
+    width: 100%; /* Fill the parent's width */
+    height: 100%; /* Fill the parent's height */
+    object-fit: cover; /* Changed from 'cover' to 'contain' to show entire video */
+    z-index: -1; /* Place it behind the content of its parent block */
+    pointer-events: none; /* Allow clicks to pass through the video */
 }
 
 .cover-title {
@@ -150,25 +150,24 @@ p {
 
 .Porfolio-title {
     text-align: left;
-    word-break: break-all;
+    width: 30%;
 }
 
 section {
     background-color: var(--colour2);
     float: left;
-    width: calc(30% - 75px);
     border: var(--borderThickness) solid var(--colour1);
     border-radius: 20px;
     padding: 25px;
-
     margin-right: 5px;
-    min-height: 35vh;
+    min-width: 30vh;
+    min-height: 30vh;
 }
 
 aside {
     background-color: var(--colour2);
     float: right;
-    width: calc(70% - 75px);
+    width: calc(100% - 30vh - 170px);
     border: var(--borderThickness) solid var(--colour1);
     border-radius: 20px;
     padding: 25px;
@@ -180,25 +179,40 @@ aside {
     float: left;
     background-color: var(--colour2);
     min-width: 300px;
-    width: calc(50% - 85px);
-    border: var(--borderThickness) solid var(--colour1);
-    border-radius: 20px;
-    padding: 25px;
-    margin: 10px 0px;
-    animation: appear 5s linear;
-}
-
-.project-r {
-    float: right;
-    background-color: var(--colour2);
-    min-width: 300px;
-    width: calc(50% - 85px);
+    width: calc(50% - 95px);
     border: var(--borderThickness) solid var(--colour1);
     border-radius: 20px;
     padding: 25px;
     margin: 10px 0px;
     animation: appear linear;
     animation-timeline: view();
+    animation-range: entry 0%;
+}
+
+.project-r {
+    float: right;
+    background-color: var(--colour2);
+    min-width: 300px;
+    width: calc(50% - 95px);
+    border: var(--borderThickness) solid var(--colour1);
+    border-radius: 20px;
+    padding: 25px;
+    margin: 10px 0px;
+    animation: appear linear;
+    animation-timeline: view();
+    animation-range: entry 0%;
+}
+
+/* Define the 'appear' keyframes for the animation */
+@keyframes appear {
+    from {
+        opacity: 0;
+        scale: 0.5;
+    }
+    to {
+        opacity: 1;
+        scale: 1;
+    }
 }
 
 .project-thumbnail {
